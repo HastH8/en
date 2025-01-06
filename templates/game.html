@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pipes Game</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="static/css/styles.css">
+    
+    <!-- Game Scripts -->
+    <script src="static/js/game.js"></script>
+    <script src="static/js/board.js"></script>
+    <script src="static/js/timer.js"></script>
+    <script src="static/js/control.js"></script>
+    <script src="static/js/io.js"></script>
+    <script src="static/js/pipes.js"></script>
+</head>
+<body onload="init()" onkeydown="return controller.eventprocess(event)" onkeypress="controller.eventprocess(event)">
+    <!-- Main Game Canvas -->
+    <canvas id="gameContent" 
+            oncontextmenu="return false;" 
+            onselectstart="return false;"
+            onmouseup="controller.eventprocess(event)"
+            onmousedown="controller.eventprocess(event)"
+            onclick="controller.eventprocess(event)"
+            ondblclick="controller.eventprocess(event)"
+            onmousemove="controller.eventprocess(event)"
+            onmouseover="controller.eventprocess(event)"
+            onmouseout="controller.eventprocess(event)">
+    </canvas>
+
+    <!-- Right Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-content">
+            <!-- Logo -->
+            <img src="static/images/school-logo.png" alt="School Logo" class="logo">
+
+            <!-- Size Selection -->
+            <div class="section">
+                <h2>Playing Area Size</h2>
+                <select id="sizeselect" onchange="form_size()">
+                    <option value="4x4">Tiny (4×4)</option>
+                    <option value="8x8" selected>Small (8×8)</option>
+                    <option value="16x16">Medium (16×16)</option>
+                    <option value="32x32">Large (32×32)</option>
+                    <option value="64x64">Huge (64×64)</option>
+                    <option value="100x100">Max (100×100)</option>
+                    <option value="custom">Custom...</option>
+                </select>
+                
+                <div class="size-inputs">
+                    <input id="hsize" type="text" value="8" disabled>
+                    <span>×</span>
+                    <input id="vsize" type="text" value="8" disabled>
+                </div>
+                
+                <button onclick="newgame()">New Game</button>
+            </div>
+
+            <!-- Tile Size -->
+            <div class="section">
+                <h2>Tile Size</h2>
+                <div id="tileset_placeholder"></div>
+                <div id="loading_images" class="hidden">Loading images...</div>
+            </div>
+
+            <!-- Timer -->
+<!--            <div class="section">
+                <h2>Timer</h2>
+                <div id="timer">00:00:00</div>
+            </div>
+        -->
+            <!-- Controls -->
+            <div class="section">
+                <h2>Controls</h2>
+                <div id="controlset_placeholder"></div>
+                <div id="controlset_desc"></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

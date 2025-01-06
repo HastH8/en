@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clean Water for Indigenous Communities</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav class="nav-header">
+        <div class="nav-brand">
+            <img src="{{ url_for('static', filename='images/school-logo.png') }}" alt="" class="school-logo">
+            <span>Clean Water Initiative</span>
+        </div>
+        <div class="nav-buttons">
+            <a href="/" class="nav-btn">Presentation</a>
+            <a href="/game" class="nav-btn">Water Pipeline Game</a>
+            <a href="/quiz" class="nav-btn">Knowledge Quiz</a>
+        </div>
+    </nav>
+    
+    
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

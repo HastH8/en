@@ -1,0 +1,109 @@
+let quizState = {
+    correctAnswers: 0,
+    currentQuestion: 0,
+    totalQuestions: document.querySelectorAll('.question-card').length,
+    userAnswers: []
+};
+
+// Add event listeners to all option buttons when the page loads
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.option-button').forEach(button => {
+        button.addEventListener('click', function() {
+            const questionCard = this.closest('.question-card');
+            const questionIndex = questionCard.dataset.question;
+            const selectedAnswer = this.textContent.trim();
+            checkAnswer(questionIndex, selectedAnswer);
+        });
+    });
+});
+
+function checkAnswer(questionIndex, selectedAnswer) {
+    const currentCard = document.querySelector(`.question-card[data-question="${questionIndex}"]`);
+    const buttons = currentCard.querySelectorAll('.option-button');
+    
+    if (currentCard.querySelector('.option-button:disabled')) {
+        return;
+    }
+    
+    fetch('/check_answer', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            questionIndex: questionIndex,
+            answer: selectedAnswer.trim()
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        quizState.userAnswers[questionIndex] = {
+            selected: selectedAnswer,
+            correct: data.correct,
+            correctAnswer: selectedAnswer
+        };
+        
+        if (data.correct) {
+            quizState.correctAnswers++;
+        }
+        
+        buttons.forEach(btn => {
+            if (btn.textContent.trim() === selectedAnswer.trim()) {
+                btn.style.backgroundColor = data.correct ? '#4ade80' : '#f87171';
+                btn.style.color = 'white';
+            }
+            btn.disabled = true;
+        });
+
+        updateStats();
+        currentCard.querySelector('.next-button').style.display = 'block';
+    });
+}
+
+function showNextQuestion() {
+    const currentCard = document.querySelector(`.question-card[data-question="${quizState.currentQuestion}"]`);
+    currentCard.style.display = 'none';
+    
+    quizState.currentQuestion++;
+    if (quizState.currentQuestion < quizState.totalQuestions) {
+        const nextCard = document.querySelector(`.question-card[data-question="${quizState.currentQuestion}"]`);
+        
+        // Reset all buttons in the next question
+        nextCard.querySelectorAll('.option-button').forEach(btn => {
+            btn.disabled = false;
+            btn.style.backgroundColor = '';
+            btn.style.color = '';
+        });
+        
+        // Hide the next button until new selection is made
+        nextCard.querySelector('.next-button').style.display = 'none';
+        
+        nextCard.style.display = 'block';
+        document.getElementById('current-question').textContent = quizState.currentQuestion + 1;
+    } else {
+        showQuizComplete();
+    }
+}
+
+function showQuizComplete() {
+    let resultsHTML = `
+        <div class="quiz-complete">
+            <h2>Quiz Complete!</h2>
+            <p>You got ${quizState.correctAnswers} out of ${quizState.totalQuestions} questions correct.</p>
+            <div class="answers-review">
+                ${quizState.userAnswers.map((answer, index) => `
+                    <div class="answer-item ${answer.correct ? 'correct' : 'incorrect'}">
+                        <h4>Question ${index + 1}</h4>
+                        <p>Your answer: ${answer.selected}</p>
+                        ${!answer.correct ? `<p>Correct answer: ${answer.correctAnswer}</p>` : ''}
+                    </div>
+                `).join('')}
+            </div>
+            <button onclick="location.reload()" class="retry-button">Try Again</button>
+        </div>
+    `;
+    
+    document.getElementById('quiz-content').innerHTML = resultsHTML;
+}
+
+function updateStats() {
+    document.getElementById('correct-answers').textContent = quizState.correctAnswers;
+}

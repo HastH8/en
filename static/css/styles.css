@@ -1,0 +1,177 @@
+:root {
+    --sidebar-width: 250px;
+    --primary: #2563eb;
+    --background: #f8fafc;
+    --white: #ffffff;
+}
+
+/* Base Layout */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: arial, sans-serif;
+    overflow: hidden;
+}
+
+/* Game Canvas */
+#gameContent {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: calc(100% - 200px);
+    height: 100vh;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+}
+
+/* Sidebar Menu */
+.menu {
+    font-size: 75%;
+    padding: 8px;
+}
+
+.menu h1 {
+    font-size: 125%;
+    margin: 15px 0 10px 0;
+}
+
+.menu hr {
+    border: none;
+    border-top: 1px solid black;
+    margin: 15px 0;
+}
+
+/* Form Controls */
+select {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+input[type="text"] {
+    width: 40px;
+    text-align: center;
+}
+
+input[type="button"] {
+    width: 100%;
+    margin: 5px 0;
+    padding: 5px;
+    cursor: pointer;
+}
+
+/* Timer Display */
+#timer {
+    font-size: 40px;
+    border: 1px solid black;
+    text-align: center;
+    margin: 10px 0;
+    padding: 5px;
+    background: white;
+}
+
+/* Game Elements */
+.t {
+    position: absolute;
+    overflow: hidden;
+    background-repeat: no-repeat;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+}
+
+.t1 {
+    position: absolute;
+    top: 0;
+    width: 200px;
+    height: 1px;
+}
+
+/* Win State */
+.won {
+    background-color: yellow;
+}
+
+/* Logo */
+.menu img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+/* Sidebar Container */
+.sidebar-container {
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 200px;
+    height: 100%;
+    background-color: white;
+    border-left: 1px solid black;
+    overflow-y: auto;
+    z-index: 1;
+}
+
+
+/* Sidebar Styles */
+.sidebar {
+    width: var(--sidebar-width);
+    height: 100vh;
+    position: fixed;
+    right: 0;
+    top: 0;
+    background: var(--white);
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+}
+
+.sidebar-content {
+    padding: 20px;
+}
+
+.logo {
+    width: 100%;
+    max-width: 180px;
+    margin-bottom: 20px;
+}
+
+.section {
+    margin-bottom: 30px;
+}
+
+h2 {
+    font-size: 1.2rem;
+    color: var(--primary);
+    margin-bottom: 15px;
+}
+
+select, input, button {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+}
+
+button {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 12px;
+    cursor: pointer;
+}
+
+#timer {
+    font-size: 40px;
+    border: 1px solid black;
+    text-align: center;
+    background-color: white;
+    margin: 10px 0;
+}
+
+/* Original winning state */
+.won {
+    background-color: yellow;
+}
+
+
+.hidden {
+    display: none;
+}

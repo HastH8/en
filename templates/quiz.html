@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="quiz-container">
+    <h2>Clean Water Knowledge Quiz</h2>
+    
+    <div id="quiz-content">
+        {% for question in questions %}
+        <div class="question-card {% if loop.index0 == 0 %}active{% endif %}" data-question="{{ loop.index0 }}">
+            <h3>Question {{ loop.index }} of {{ questions|length }}</h3>
+            <p class="question-text">{{ question.question }}</p>
+            <div class="options-grid">
+                {% for option in question.options %}
+                <button class="option-button" onclick="checkAnswer({{ loop.index0 }}, '{{ option.strip() }}')">
+                    {{ option }}
+                </button>
+                {% endfor %}
+            </div>
+            <button class="next-button" onclick="showNextQuestion()">Next Question →</button>
+        </div>
+        
+        {% endfor %}
+        
+    </div>
+    
+    <div class="stats">
+        <div class="stat-card">
+            <div class="stat-number" id="correct-answers">0</div>
+            <div class="stat-label">Correct Answers</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number" id="current-question">1</div>
+            <div class="stat-label">Current Question</div>
+        </div>
+    </div>
+</div>
+<script src="{{ url_for('static', filename='js/quiz.js') }}"></script>
+{% endblock %}
