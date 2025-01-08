@@ -2,7 +2,8 @@ let quizState = {
     correctAnswers: 0,
     currentQuestion: 0,
     totalQuestions: document.querySelectorAll('.question-card').length,
-    userAnswers: []
+    userAnswers: [],
+    groupName: ''
 };
 
 // Add event listeners to all option buttons when the page loads
@@ -15,7 +16,33 @@ document.addEventListener('DOMContentLoaded', function() {
             checkAnswer(questionIndex, selectedAnswer);
         });
     });
+    
 });
+document.addEventListener('DOMContentLoaded', generateQuizQR);
+
+
+function startQuiz() {
+    const groupNameInput = document.getElementById('group-name');
+    const groupName = groupNameInput.value.trim();
+    
+    if (!groupName) {
+        alert('Please enter a group name');
+        return;
+    }
+    
+    quizState.groupName = groupName;
+    localStorage.setItem('groupName', groupName);
+    
+    // Update the group display in stats
+    document.getElementById('group-display').textContent = groupName;
+    
+    // Hide group selection and show quiz
+    document.getElementById('group-selection').style.display = 'none';
+    document.getElementById('quiz-content').style.display = 'block';
+    
+    // Show first question
+    document.querySelector('.question-card[data-question="0"]').style.display = 'block';
+}
 
 function checkAnswer(questionIndex, selectedAnswer) {
     const currentCard = document.querySelector(`.question-card[data-question="${questionIndex}"]`);
@@ -30,7 +57,8 @@ function checkAnswer(questionIndex, selectedAnswer) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
             questionIndex: questionIndex,
-            answer: selectedAnswer.trim()
+            answer: selectedAnswer.trim(),
+            groupName: quizState.groupName
         })
     })
     .then(response => response.json())
@@ -106,4 +134,16 @@ function showQuizComplete() {
 
 function updateStats() {
     document.getElementById('correct-answers').textContent = quizState.correctAnswers;
+}
+
+function generateQuizQR() {
+    const quizURL = window.location.href;
+    const qrcode = new QRCode(document.getElementById("qrcode"), {
+        text: quizURL,
+        width: 128,
+        height: 128,
+        colorDark: "#000000",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.H
+    });
 }
