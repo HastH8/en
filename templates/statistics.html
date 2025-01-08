@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="statistics-container">
+    <h2>Group Statistics</h2>
+    
+    <div class="stats-grid">
+        {% for group_name, stats in statistics.items() %}
+        <div class="group-card">
+            <h3>{{ group_name }}</h3>
+            <div class="group-summary">
+                <div class="stat-item">
+                    <span class="label">Total Attempts:</span>
+                    <span class="value">{{ stats.total_attempts }}</span>
+                </div>
+                <div class="stat-item">
+                    <span class="label">Correct Answers:</span>
+                    <span class="value">{{ stats.correct_answers }}</span>
+                </div>
+                <div class="stat-item">
+                    <span class="label">Success Rate:</span>
+                    <span class="value">
+                        {{ "%.1f"|format(stats.correct_answers / stats.total_attempts * 100 if stats.total_attempts > 0 else 0) }}%
+                    </span>
+                </div>
+            </div>
+            
+            <div class="questions-stats">
+                <h4>Question Performance</h4>
+                <div class="questions-grid">
+                    {% for q_idx in range(10) %}
+                    {% set q_stats = stats.questions_stats.get(q_idx, {'correct': 0, 'incorrect': 0}) %}
+                    <div class="question-stat">
+                        <span class="q-number">Q{{ q_idx + 1 }}</span>
+                        <div class="progress-bar">
+                            {% set total = q_stats.correct + q_stats.incorrect %}
+                            {% set percent = (q_stats.correct / total * 100) if total > 0 else 0 %}
+                            <div class="progress" style="width: {{ percent }}%"></div>
+                        </div>
+                        <span class="percent">{{ "%.0f"|format(percent) }}%</span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
