@@ -66,7 +66,7 @@ function checkAnswer(questionIndex, selectedAnswer) {
         quizState.userAnswers[questionIndex] = {
             selected: selectedAnswer,
             correct: data.correct,
-            correctAnswer: selectedAnswer
+            correctAnswer: quiz_questions[questionIndex].correct // Store the correct answer
         };
         
         if (data.correct) {
@@ -117,11 +117,13 @@ function showQuizComplete() {
             <h2>Quiz Complete!</h2>
             <p>You got ${quizState.correctAnswers} out of ${quizState.totalQuestions} questions correct.</p>
             <div class="answers-review">
-                ${quizState.userAnswers.map((answer, index) => `
-                    <div class="answer-item ${answer.correct ? 'correct' : 'incorrect'}">
+                ${quiz_questions.map((question, index) => `
+                    <div class="answer-item ${quizState.userAnswers[index].correct ? 'correct' : 'incorrect'}">
                         <h4>Question ${index + 1}</h4>
-                        <p>Your answer: ${answer.selected}</p>
-                        ${!answer.correct ? `<p>Correct answer: ${answer.correctAnswer}</p>` : ''}
+                        <p>${question.question}</p>
+                        <p>Your answer: ${quizState.userAnswers[index].selected}</p>
+                        ${!quizState.userAnswers[index].correct ? 
+                            `<p>Correct answer: ${question.correct}</p>` : ''}
                     </div>
                 `).join('')}
             </div>
@@ -131,6 +133,7 @@ function showQuizComplete() {
     
     document.getElementById('quiz-content').innerHTML = resultsHTML;
 }
+
 
 function updateStats() {
     document.getElementById('correct-answers').textContent = quizState.correctAnswers;
