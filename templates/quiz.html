@@ -4,7 +4,20 @@
 <div class="quiz-container">
     <h2>Clean Water Knowledge Quiz</h2>
     
-    <div id="quiz-content">
+    <!-- Group Selection Section -->
+    <div id="group-selection" class="group-selection">
+        <h3>Enter Your Group Name</h3>
+        <div class="group-input-container">
+            <input type="text" id="group-name" placeholder="Enter your group name" class="group-input">
+            <button onclick="startQuiz()" class="start-button">Start Quiz</button>
+        </div>
+    </div>
+    <div id="qr-container">
+        <h3>Scan to take quiz on mobile</h3>
+        <div id="qrcode"></div>
+    </div>
+    <!-- Quiz Content Section -->
+    <div id="quiz-content" style="display: none;">
         {% for question in questions %}
         <div class="question-card {% if loop.index0 == 0 %}active{% endif %}" data-question="{{ loop.index0 }}">
             <h3>Question {{ loop.index }} of {{ questions|length }}</h3>
@@ -18,9 +31,7 @@
             </div>
             <button class="next-button" onclick="showNextQuestion()">Next Question →</button>
         </div>
-        
         {% endfor %}
-        
     </div>
     
     <div class="stats">
@@ -32,7 +43,12 @@
             <div class="stat-number" id="current-question">1</div>
             <div class="stat-label">Current Question</div>
         </div>
+        <div class="stat-card">
+            <div class="stat-number" id="group-display"></div>
+            <div class="stat-label">Group Name</div>
+        </div>
     </div>
 </div>
+
 <script src="{{ url_for('static', filename='js/quiz.js') }}"></script>
 {% endblock %}
