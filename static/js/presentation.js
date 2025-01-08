@@ -28,4 +28,5 @@ function toggleFullscreen() {
 document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowRight') nextSlide();
     if (e.key === 'ArrowLeft') prevSlide();
+    if (e.key == 'ESC') document.exitFullscreen();
 });
