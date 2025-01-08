@@ -1,3 +1,4 @@
+let quiz_questions = [];
 let quizState = {
     correctAnswers: 0,
     currentQuestion: 0,
@@ -6,8 +7,11 @@ let quizState = {
     groupName: ''
 };
 
-// Add event listeners to all option buttons when the page loads
 document.addEventListener('DOMContentLoaded', function() {
+    // Get questions data from the HTML data attribute
+    const questionsContainer = document.getElementById('quiz-content');
+    quiz_questions = JSON.parse(questionsContainer.dataset.questions);
+
     document.querySelectorAll('.option-button').forEach(button => {
         button.addEventListener('click', function() {
             const questionCard = this.closest('.question-card');
@@ -16,10 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
             checkAnswer(questionIndex, selectedAnswer);
         });
     });
-    
 });
-document.addEventListener('DOMContentLoaded', generateQuizQR);
-
 
 function startQuiz() {
     const groupNameInput = document.getElementById('group-name');
