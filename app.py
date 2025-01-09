@@ -12,7 +12,7 @@ quiz_questions = [
     {
         "question": "What percentage of Indigenous communities in Canada face water issues?",
         "options": ["60%", "45%", "15%", "30%"],
-        "correct": "45%"
+        "correct": "15%"
     },
     {
         "question": "How long has the Shamattawa First Nation been under a boil water advisory?",
@@ -47,7 +47,7 @@ quiz_questions = [
     {
         "question": "What is the longest recorded period for a community under boil water advisory?",
         "options": ["30+ years", "15+ years", "25+ years", "20+ years"],
-        "correct": "25+ years"
+        "correct": "30+ years"
     },
     {
         "question": "Which First Nation launched a class action lawsuit against the federal government?",
